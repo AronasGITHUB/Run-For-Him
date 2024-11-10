@@ -1,0 +1,259 @@
+#!/bin/bash
+
+DISTANCE="1000"  # default distance
+PLACE="Forest, Europe"  # default place
+
+# Main menu function
+function menu() {
+	clear
+	echo "=================================="
+	echo "Run For Him      -     1.0-alpha  "
+	echo "=================================="
+	echo "[1] Start"
+	echo "[2] Help"
+	echo "[3] Exit"
+	echo ""
+	echo "----------------------------------"
+	read -p "Enter an option: " option
+	case $option in
+		1) rfh ;;
+		2) hlp ;;
+		3) clear; exit 0 ;;
+		*) 
+			# error id 1 cause
+			echo "(!) Error! Invalid Option! Error ID 1"
+			sleep 2
+			menu
+			;;
+	esac
+}
+
+# Help function
+function hlp() {
+	clear
+	echo "Run for Him is a text adventure game. Your goal is to get as close to your friend as possible."
+	echo "Your friend, named Bob, has been separated from you after a serious natural disaster."
+	echo "Can you get back to him?"
+	echo ""
+	echo "The game uses a distance system. The lower the number, the closer you are to Bob."
+	read -p "Press any key to continue" pak  # Short for "Press Any Key"
+	menu
+}
+
+# Main game function
+function rfh() {
+	clear
+	echo "------------- Game --------------"
+	echo "Distance: ${DISTANCE}"
+	echo "Place: ${PLACE}"
+	echo ""
+	echo "You don’t have a compass. Where do you go?"
+	echo "[1] Go north"
+	echo "[2] Go south"
+	echo "[3] Go west"
+	echo "[4] Go east"
+	read -p ">" op1
+	case $op1 in
+		1) go_north ;;
+		2) go_south ;;
+		3) go_west ;;
+		4) go_east ;;
+		*) 
+			echo "Invalid choice. Please choose 1, 2, 3, or 4."
+			sleep 2
+			rfh
+			;;
+	esac
+}
+
+# Handle going north
+function go_north() {
+	DISTANCE="1100"
+	PLACE="Fjord, Norway, Europe"
+	clear
+	echo "Distance: ${DISTANCE}"
+	echo "Place: ${PLACE}"
+	echo "Why am I further away from Bob? I should have known."
+	read -p "Would you like to go back to the beginning? (y/n): " ncn_gowest
+	case $ncn_gowest in
+		[Yy]*) rfh ;;
+		[Nn]*) echo "Game Over!" ;;
+		*) echo "Please answer with y (yes) or n (no)." ;;
+	esac
+}
+
+# Handle going south
+function go_south() {
+	DISTANCE="1100"
+	PLACE="Southern Spain, Europe"
+	clear
+	echo "Distance: ${DISTANCE}"
+	echo "Place: ${PLACE}"
+	echo "Why am I further away from Bob? I should have known."
+	read -p "Would you like to go back to the beginning? (y/n): " ncn_gowest
+	case $ncn_gowest in
+		[Yy]*) rfh ;;
+		[Nn]*) echo "Game Over!" ;;
+		*) echo "Please answer with y (yes) or n (no)." ;;
+	esac
+}
+
+# Handle going west
+function go_west() {
+	DISTANCE="900"
+	PLACE="Atlantic Beach, Europe"
+	clear
+	echo "Distance: ${DISTANCE}"
+	echo "Place: ${PLACE}"
+	echo "Oh! The beach! I can ask someone to borrow a boat for free."
+	read -p "Ask the person? (1: Yes, 2: No): " ncw_ask
+	case $ncw_ask in
+		1) sail_seas ;;
+		2) echo "Game Over!" ;;
+		*) 
+			echo "Invalid choice. Please answer with 1 or 2."
+			go_west
+			;;
+	esac
+}
+
+# Handle sailing seas
+function sail_seas() {
+	DISTANCE="800"
+	PLACE="International Waters, Atlantic"
+	clear
+	echo "Distance: ${DISTANCE}"
+	echo "Place: ${PLACE}"
+	echo ""
+	echo "You sail the seas of the Atlantic."
+	sleep 2
+	echo "Uh oh, the clouds are getting dark."
+	sleep 2
+	echo "You see a huge wave! Oh no, this is going to break your boat."
+	sleep 2
+	echo "It hit you."
+	sleep 2
+	echo "What should you do?"
+	echo "[1] Swim"
+	echo "[2] Drown"
+	read -p ">" opt_swim
+	case $opt_swim in
+		1) swim ;;
+		2) echo "Game Over!" ;;
+		*) 
+			echo "Invalid choice. Please choose 1 or 2."
+			sail_seas
+			;;
+	esac
+}
+
+# Handle swimming to safety
+function swim() {
+	DISTANCE="700"
+	PLACE="New York, USA"
+	clear
+	echo "Distance: ${DISTANCE}"
+	echo "Place: ${PLACE}"
+	echo ""
+	echo "You are closer! It’s the country you got sucked to by a tornado!"
+	echo ""
+	echo "But should we ask Americans for a map?"
+	echo "[1] Ask Americans"
+	echo "[2] Just go"
+	read -p ">" opt_usa_ask
+	case $opt_usa_ask in
+		1) ask_americans ;;
+		2) echo "Game Over!" ;;
+		*) 
+			echo "Invalid choice. Please choose 1 or 2."
+			swim
+			;;
+	esac
+}
+
+# Handle asking Americans for a map
+function ask_americans() {
+	DISTANCE="600"
+	PLACE="Illinois, USA"
+	clear
+	echo "Distance: ${DISTANCE}"
+	echo "Place: ${PLACE}"
+	echo ""
+	echo "Thanks, Americans, for giving you a map!"
+	echo "Now we need to walk all the way to the west USA, let’s do it!"
+	echo "Exercise!"
+	read -p "Type 'a' to continue: " a_t
+	case $a_t in
+		a) continue_walk ;;
+		*) 
+			echo "Invalid input. Please type 'a'."
+			ask_americans
+			;;
+	esac
+}
+
+# Continue walking through the USA
+function continue_walk() {
+	read -p "Type 'l' to continue: " l_t
+	case $l_t in
+		l) continue_exploring ;;
+		*) 
+			echo "Invalid input. Please type 'l'."
+			continue_walk
+			;;
+	esac
+}
+
+# Continue exploring the west USA
+function continue_exploring() {
+	read -p "Type 'y' to continue: " y_t
+	case $y_t in
+		y) success ;;
+		*) 
+			echo "Invalid input. Please type 'y'."
+			continue_exploring
+			;;
+	esac
+}
+
+# Handle success and final part of the game
+function success() {
+	DISTANCE="100"
+	PLACE="The state of California, USA"
+	clear
+	echo "Distance: ${DISTANCE}"
+	echo "Place: ${PLACE}"
+	echo "Yay! We are in the western USA."
+	echo "Should we follow the path we remember?"
+	echo "[1] Yes!"
+	echo "[2] No."
+	read -p ">" opt_follow
+	case $opt_follow in
+		1)
+			DISTANCE="10"
+			PLACE="Neighbourhood"
+			clear
+			echo "Distance: ${DISTANCE}"
+			echo "Place: ${PLACE}"
+			echo ""
+			echo "You are successfully at the neighbourhood."
+			echo "You walk to home, and surprisingly, Bob is here!"
+			echo "You hug each other, and you finally found Bob."
+			sleep 2
+			echo "You win!"
+			sleep 2
+			echo "The end."
+			exit 0
+			;;
+		2) 
+			echo "Game Over!" 
+			;;
+		*)
+			echo "Invalid choice. Please answer with 1 or 2."
+			success
+			;;
+	esac
+}
+
+# Start the game
+menu
